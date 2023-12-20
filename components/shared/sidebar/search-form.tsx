@@ -33,6 +33,7 @@ export default function SearchForm({ result, setResult }: SearchFormProps) {
 	const search = useCallback(async (q: string) => {
 		try {
 			setResult([]);
+			// @ts-ignore
 			setResult(await searchThread(q));
 		} catch (error) {
 			if (error instanceof Error) {
