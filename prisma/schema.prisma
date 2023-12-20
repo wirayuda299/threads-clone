@@ -1,0 +1,42 @@
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["fullTextSearch"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String
+  firstName String
+  username  String
+  email     String
+  image     String
+  bio       String
+  threads   Thread[]
+  followers User[]   @relation("followers")
+  following User[]   @relation("followers")
+  createdAt DateTime @default(now())
+
+  @@id([id])
+}
+
+model Thread {
+  id        String   @id @default(cuid())
+  captions  String
+  createdAt DateTime @default(now())
+  views     Int      @default(0)
+  likes     String[]
+  type      Types
+  userId    String
+  parentId  String?
+  User      User?    @relation(fields: [userId], references: [id])
+}
+
+enum Types {
+  thread
+  comment
+  tagged
+}
