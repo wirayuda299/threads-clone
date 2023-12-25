@@ -1,0 +1,61 @@
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["fullTextSearch"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id          String
+  firstName   String
+  username    String
+  email       String
+  image       String
+  bio         String
+  threads     Thread[]
+  communities Community[] @relation("Community")
+  followers   User[]      @relation("followers")
+  following   User[]      @relation("followers")
+  createdAt   DateTime    @default(now())
+  Community   Community?  @relation("Members", fields: [communityId], references: [id])
+  communityId String?
+
+  @@id([id])
+}
+
+model Community {
+  id          String   @id @default(cuid())
+  name        String
+  description String
+  logo        String
+  createdAt   DateTime @default(now())
+  updateAt    DateTime @default(now())
+  userId      String
+  User        User     @relation("Community", fields: [userId], references: [id])
+  members     User[]   @relation("Members")
+  memberId    String?
+  threads     Thread[]
+}
+
+model Thread {
+  id          String     @id @default(cuid())
+  captions    String
+  createdAt   DateTime   @default(now())
+  views       Int        @default(0)
+  likes       String[]
+  type        Types
+  userId      String
+  parentId    String?
+  User        User?      @relation(fields: [userId], references: [id])
+  Community   Community? @relation(fields: [communityId], references: [id])
+  communityId String?
+}
+
+enum Types {
+  thread
+  comment
+  tagged
+}
