@@ -27,19 +27,19 @@ export default async function Communities() {
           >
             <header className="flex w-full items-center gap-3">
               <Image
-                className="aspect-auto h-8 w-8 rounded-full object-contain"
+                className=" aspect-square !h-10 !w-10 rounded-full object-cover"
                 src={community.logo}
                 width={50}
                 height={50}
                 alt="profile"
               />
-              <h2 className="truncate text-lg font-semibold">
+              <h2 className="truncate text-lg font-semibold first-letter:capitalize">
                 {community.name}
               </h2>
             </header>
             <p className="truncate py-2 text-sm">{community.description}</p>
             <Link
-              href={`community/${community.id}`}
+              href={`communities/${community.id}`}
               className="block w-full rounded-lg bg-primary-500 px-3 py-1 text-center text-lg text-white"
             >
               View

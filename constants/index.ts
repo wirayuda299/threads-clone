@@ -1,4 +1,4 @@
-import { sidebarLinks } from './navItems';
-import { tabsValue } from './tabs';
+import { sidebarLinks } from "./navItems";
+import { profileTabs, communityTabs } from "./tabs";
 
-export { sidebarLinks, tabsValue };
+export { sidebarLinks, profileTabs, communityTabs };

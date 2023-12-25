@@ -20,7 +20,7 @@ model User {
   followers   User[]      @relation("followers")
   following   User[]      @relation("followers")
   createdAt   DateTime    @default(now())
-  Community   Community?  @relation("Members", fields: [communityId], references: [id])
+  Community   Community?  @relation(fields: [communityId], references: [id])
   communityId String?
 
   @@id([id])
@@ -35,8 +35,7 @@ model Community {
   updateAt    DateTime @default(now())
   userId      String
   User        User     @relation("Community", fields: [userId], references: [id])
-  members     User[]   @relation("Members")
-  memberId    String?
+  members     User[]
   threads     Thread[]
 }
 
@@ -49,8 +48,8 @@ model Thread {
   type        Types
   userId      String
   parentId    String?
-  User        User?      @relation(fields: [userId], references: [id])
-  Community   Community? @relation(fields: [communityId], references: [id])
+  User        User?      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  Community   Community? @relation(fields: [communityId], references: [id], onDelete: Cascade)
   communityId String?
 }
 

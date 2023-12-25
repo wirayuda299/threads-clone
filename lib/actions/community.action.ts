@@ -1,8 +1,11 @@
 "use server";
 
+import { revalidatePath } from "next/cache";
+
 import prisma from "@/prisma";
 import { getCurrentUser } from "../utils";
-import { redirect } from "next/navigation";
+import { notFound } from "next/navigation";
+
 type CreateCommunityProps = {
   description: string;
   logo: string;
@@ -20,7 +23,7 @@ export async function createCommunity(data: CreateCommunityProps) {
         userId: currentUser.id,
       },
     });
-    redirect("/communities");
+    revalidatePath("/communities");
   } catch (error) {
     throw error;
   }
@@ -29,6 +32,23 @@ export async function createCommunity(data: CreateCommunityProps) {
 export async function getAllCommunities() {
   try {
     return await prisma.community.findMany();
+  } catch (error) {
+    throw error;
+  }
+}
+
+export async function getCommunityById(id: string) {
+  try {
+    const community = await prisma.community.findUnique({
+      where: { id },
+      include: {
+        members: true,
+        User: { select: { username: true, image: true, id: true } },
+      },
+    });
+    if (community === null) return notFound();
+
+    return community;
   } catch (error) {
     throw error;
   }

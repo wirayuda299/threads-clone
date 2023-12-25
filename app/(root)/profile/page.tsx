@@ -3,6 +3,7 @@ import Image from "next/image";
 import { getThreadByCurrentUser } from "@/lib/actions/thread.action";
 import { Card, Tab } from "@/components/index";
 import { getCurrentUser } from "@/lib/utils";
+import { profileTabs } from "@/constants";
 
 type Props = {
   params: { id: string };
@@ -48,7 +49,7 @@ export default async function Profile({ searchParams }: Props) {
           <span className="hidden md:block">Edit</span>
         </button>
       </header>
-      <Tab />
+      <Tab tabs={profileTabs} />
       <section className="mt-5 flex flex-col gap-5">
         {searchParams.category
           ? user.threads

@@ -6,7 +6,7 @@ export { default as Loader } from "@/components/shared/Loader";
 export { default as Card } from "@/components/shared/Card/index";
 export { default as CommentForm } from "@/components/forms/upload-comment";
 export { default as Parser } from "@/components/shared/parser";
-export { default as Tab } from "@/components/profile/tab";
+export { default as Tab } from "@/components/shared/tab";
 export { default as Pagination } from "@/components/shared/Pagination";
 export { default as CreateCommunityForm } from "@/components/forms/create-communities";
 export { default as CreateCommunityButton } from "@/components/create-community";
