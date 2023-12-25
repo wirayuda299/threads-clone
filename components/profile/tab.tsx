@@ -16,11 +16,12 @@ export default function Tab() {
 	const category = params.get('category');
 
 	return (
-		<section className='flex justify-center mt-5 rounded-lg bg-main'>
+		<section className='mt-5 flex justify-center rounded-lg bg-main'>
 			{tabsValue.map((tab) => (
 				<button
+					key={tab.label}
 					onClick={() => handleClick(tab.label)}
-					className={`flex items-center transition-colors ease-in-out duration-300 justify-center gap-2 w-full p-4 ${
+					className={`flex w-full items-center justify-center gap-2 p-4 transition-colors duration-300 ease-in-out ${
 						tab.label === category ? 'bg-black/50' : ''
 					}`}
 				>
@@ -31,7 +32,7 @@ export default function Tab() {
 						height={30}
 						alt={tab.label}
 					/>
-					<span className='font-medium hidden md:block'>{tab.title}</span>
+					<span className='hidden font-medium md:block'>{tab.title}</span>
 				</button>
 			))}
 		</section>

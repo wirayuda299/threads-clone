@@ -19,12 +19,13 @@ export default function NavLink({ route, label, imgURL }: NavLinkProps) {
 	const pathname = usePathname();
 	const [result, setResult] = useState<Thread[]>([]);
 
+  console.log("Hello")
 	return (
 		<>
 			{route === '/search' ? (
 				<Sheet>
 					<SheetTrigger
-						className={`ease md:w-full inline-flex items-center gap-3 rounded-full p-2 !text-white transition-all duration-300 hover:bg-primary-500  md:rounded-lg lg:p-3 ${
+						className={`ease inline-flex items-center gap-3 rounded-full p-2 !text-white transition-all duration-300 hover:bg-primary-500 md:w-full  md:rounded-lg lg:p-3 ${
 							pathname === route ? 'bg-primary-500' : ''
 						}`}
 					>
@@ -41,7 +42,7 @@ export default function NavLink({ route, label, imgURL }: NavLinkProps) {
 					<SheetContent
 						onBlur={() => setResult([])}
 						side='left'
-						className='overflow-y-auto h-screen'
+						className='h-screen overflow-y-auto'
 					>
 						<SearchForm result={result} setResult={setResult} />
 					</SheetContent>

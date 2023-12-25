@@ -1,13 +1,13 @@
-'use client';
+ 'use client';
 
 import { useUser } from '@clerk/nextjs';
 import { useState } from 'react';
 
-import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { createThread } from '@/lib/actions/thread.action';
-import { Button } from './ui/button';
-import { toast } from './ui/use-toast';
-import { Input } from './ui/input';
+import { Button } from '@/components/ui/button';
+import { toast } from '@/components/ui/use-toast';
+import { Input } from '@/components/ui/input';
 
 type FormCommentProps = {
 	id: string;

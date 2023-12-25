@@ -45,24 +45,25 @@ export default function SearchForm({ result, setResult }: SearchFormProps) {
 		} finally {
 			setLoading(false);
 		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
 	return (
 		<form onSubmit={onSubmit}>
 			<label
-				className='block text-white text-2xl font-semibold py-5'
+				className='block py-5 text-2xl font-semibold text-white'
 				htmlFor='search'
 			>
 				Search Thread
 			</label>
 
-			<div className='border-b pb-5 border-gray-500 border-opacity-50'>
+			<div className='border-b border-gray-500/50 pb-5'>
 				<input
 					autoComplete='off'
 					name='search'
 					required
 					aria-required
-					className='block !bg-gray-500/50 w-full p-3 rounded-lg focus-visible:outline-none text-gray-500 placeholder:text-gray-500 focus:outline-none'
+					className='block w-full rounded-lg !bg-gray-500/50 p-3 text-gray-500 placeholder:text-gray-500 focus:outline-none focus-visible:outline-none'
 					id='search'
 					placeholder='Search...'
 				/>
@@ -70,10 +71,10 @@ export default function SearchForm({ result, setResult }: SearchFormProps) {
 
 			<div className='flex justify-center'>
 				{loading && (
-					<div className='animate-spin mx-auto w-10 h-10 mt-5 border-t rounded-full'></div>
+					<div className='mx-auto mt-5 h-10 w-10 animate-spin rounded-full border-t'></div>
 				)}
 			</div>
-			<div className='flex flex-col gap-3 mt-5 h-full'>
+			<div className='mt-5 flex h-full flex-col gap-3'>
 				{result.map((thread) => (
 					<SearchResult thread={thread} key={thread.id} />
 				))}

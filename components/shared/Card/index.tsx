@@ -38,7 +38,7 @@ export default function Card({
 					/>
 					<div className='h-[calc(100%-100px)] w-0.5 bg-gray-600'></div>
 				</header>
-				<div className='flex flex-col w-full prose'>
+				<div className='prose flex w-full flex-col'>
 					<h2 className='text-xl font-semibold text-white'>
 						{User?.username ?? ''}
 					</h2>

@@ -5,6 +5,7 @@ import Parser from '../parser';
 import { Thread } from '@/types/threads';
 
 export default function SearchResult({ thread }: { thread: Thread }) {
+  console.log(thread)
 	return (
 		<Link
 			href={`thread/${thread.id}`}
@@ -12,17 +13,17 @@ export default function SearchResult({ thread }: { thread: Thread }) {
 			className='flex items-start gap-x-3'
 		>
 			<Image
-				className='rounded-full w-14 h-14'
+				className='h-14 w-14 rounded-full'
 				src={thread?.User?.image ?? ''}
 				width={50}
 				height={50}
 				alt={thread.captions}
 			/>
 			<div className='overflow-x-hidden'>
-				<h4 className='text-white font-semibold text-2xl'>
-					{thread?.User?.name ?? ''}
+				<h4 className='text-2xl font-semibold text-white'>
+					{thread?.User?.username ?? ''}
 				</h4>
-				<div className='prose truncate overflow-hidden'>
+				<div className='prose overflow-hidden truncate'>
 					<Parser content={thread.captions} />
 				</div>
 			</div>

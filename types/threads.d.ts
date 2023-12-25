@@ -12,6 +12,6 @@ export type Thread = {
 type User = {
 	User: {
 		image: string;
-		name: string;
+		username: string;
 	} | null;
 };

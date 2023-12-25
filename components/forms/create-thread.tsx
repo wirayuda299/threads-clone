@@ -50,7 +50,7 @@ export default function ThreadForm() {
 	};
 
 	return (
-		<section className='h-full w-full overflow-y-auto pb-32 pt-7 px-7'>
+		<section className='h-full w-full overflow-y-auto px-7 pb-32 pt-7'>
 			<h1 className='py-5 text-2xl font-semibold'>Create Thread</h1>
 			<Form {...form}>
 				<form
