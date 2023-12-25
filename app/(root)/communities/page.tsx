@@ -5,7 +5,7 @@ import { CreateCommunityButton } from "@/components/index";
 import { getAllCommunities } from "@/lib/actions/community.action";
 
 export const metadata = {
-  title: "Communities ",
+  title: "Communities",
 };
 
 export default async function Communities() {
