@@ -91,7 +91,9 @@ export default function CreateCommunitiesForm() {
                     />
                   )}
                 </div>
-                <span className="text-base text-white">Set Logo</span>
+                <span className="cursor-pointer text-base text-white">
+                  Set Logo
+                </span>
               </FormLabel>
               <FormControl>
                 <Input
@@ -103,7 +105,7 @@ export default function CreateCommunitiesForm() {
                   onChange={(e) => handleChange(e, "logo")}
                 />
               </FormControl>
-              <FormMessage />
+              <FormMessage className="text-red-600" />
             </FormItem>
           )}
         />
@@ -120,6 +122,7 @@ export default function CreateCommunitiesForm() {
                   className="focus:ring-none !ring-none w-full flex-1 !border-none bg-main focus:border-none focus-visible:ring-offset-0"
                 />
               </FormControl>
+              <FormMessage className="text-red-600" />
             </FormItem>
           )}
         />
@@ -138,6 +141,7 @@ export default function CreateCommunitiesForm() {
                   className="focus:ring-none !ring-none w-full flex-1 !border-none bg-main focus:border-none focus-visible:ring-offset-0"
                 />
               </FormControl>
+              <FormMessage className="text-red-600" />
             </FormItem>
           )}
         />

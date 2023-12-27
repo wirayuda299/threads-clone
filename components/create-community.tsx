@@ -14,7 +14,7 @@ export default function CreateCommunityButton() {
           height={20}
           alt="creates"
         />
-        <span>Create</span>
+        <span className="text-xs">Create</span>
       </DialogTrigger>
       <DialogContent>
         <CreateCommunitiesForm />

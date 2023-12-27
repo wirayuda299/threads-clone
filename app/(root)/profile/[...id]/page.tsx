@@ -2,26 +2,33 @@ import Image from "next/image";
 
 import { getThreadByCurrentUser } from "@/lib/actions/thread.action";
 import { Card, Tab } from "@/components/index";
-import { getCurrentUser } from "@/lib/utils";
 import { profileTabs } from "@/constants";
+import prisma from "@/prisma";
+import { notFound } from "next/navigation";
 
 type Props = {
-  params: { id: string };
+  params: { id: string[] };
   searchParams: { [key: string]: string | string[] | undefined };
 };
 
-export async function generateMetadata() {
-  const user = await getCurrentUser();
+export async function generateMetadata({ params }: Props) {
+  const user = await prisma.user.findUnique({
+    where: {
+      id: params.id[0],
+    },
+  });
+  if (!user) return notFound();
+
   return {
-    title: user.username ?? user.firstName ?? user.lastName,
+    title: user.username,
   };
 }
 
-export default async function Profile({ searchParams }: Props) {
-  const user = await getThreadByCurrentUser();
+export default async function Profile({ searchParams, params }: Props) {
+  const user = await getThreadByCurrentUser("thread", params.id[0]);
 
   return (
-    <section className="w-full p-5">
+    <section className="no-scrollbar h-full w-full overflow-y-auto p-5">
       <header className="flex items-center justify-between gap-3 border-b border-main py-10">
         <div className="flex items-center gap-3">
           <Image
@@ -54,16 +61,9 @@ export default async function Profile({ searchParams }: Props) {
         {searchParams.category
           ? user.threads
               .filter((thread) => thread.type === searchParams.category)
-              .map((thread) => (
-                <Card
-                  {...thread}
-                  key={thread.id}
-                  cardType={(searchParams.category as string) || "thread"}
-                  User={user}
-                />
-              ))
+              .map((thread) => <Card {...thread} key={thread.id} User={user} />)
           : user.threads.map((thread) => (
-              <Card {...thread} key={thread.id} cardType="thread" User={user} />
+              <Card {...thread} key={thread.id} User={user} />
             ))}
       </section>
     </section>

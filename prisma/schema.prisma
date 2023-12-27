@@ -20,7 +20,7 @@ model User {
   followers   User[]      @relation("followers")
   following   User[]      @relation("followers")
   createdAt   DateTime    @default(now())
-  Community   Community?  @relation(fields: [communityId], references: [id])
+  Community   Community?  @relation("Member", fields: [communityId], references: [id])
   communityId String?
 
   @@id([id])
@@ -34,23 +34,22 @@ model Community {
   createdAt   DateTime @default(now())
   updateAt    DateTime @default(now())
   userId      String
+  authorId    String
   User        User     @relation("Community", fields: [userId], references: [id])
-  members     User[]
-  threads     Thread[]
+  members     User[]   @relation("Member")
 }
 
 model Thread {
-  id          String     @id @default(cuid())
+  id          String   @id @default(cuid())
   captions    String
-  createdAt   DateTime   @default(now())
-  views       Int        @default(0)
+  createdAt   DateTime @default(now())
+  views       Int      @default(0)
   likes       String[]
   type        Types
   userId      String
   parentId    String?
-  User        User?      @relation(fields: [userId], references: [id], onDelete: Cascade)
-  Community   Community? @relation(fields: [communityId], references: [id], onDelete: Cascade)
-  communityId String?
+  User        User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  communityId String[] @default([])
 }
 
 enum Types {

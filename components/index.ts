@@ -10,3 +10,7 @@ export { default as Tab } from "@/components/shared/tab";
 export { default as Pagination } from "@/components/shared/Pagination";
 export { default as CreateCommunityForm } from "@/components/forms/create-communities";
 export { default as CreateCommunityButton } from "@/components/create-community";
+export { default as RenderBaseOnCategory } from "@/components/communities/renderBasedOnCategory";
+export { default as JoinButton } from "@/components/communities/join-btn";
+export { default as DeleteCommunityButton } from "@/components/communities/delete-community";
+export { default as ActionButton } from "@/components/communities/dialog";

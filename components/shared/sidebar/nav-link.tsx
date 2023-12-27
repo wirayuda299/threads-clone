@@ -8,6 +8,7 @@ import { useState } from "react";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import SearchForm from "./search-form";
 import { Thread } from "@/types/threads";
+import { useAuth } from "@clerk/nextjs";
 
 type NavLinkProps = {
   route: string;
@@ -17,6 +18,7 @@ type NavLinkProps = {
 
 export default function NavLink({ route, label, imgURL }: NavLinkProps) {
   const pathname = usePathname();
+  const user = useAuth();
   const [result, setResult] = useState<Thread[]>([]);
 
   return (
@@ -24,12 +26,12 @@ export default function NavLink({ route, label, imgURL }: NavLinkProps) {
       {route === "/search" ? (
         <Sheet>
           <SheetTrigger
-            className={`ease inline-flex items-center gap-3 rounded-full p-2 !text-white transition-all duration-300 hover:bg-primary-500 md:w-full  md:rounded-lg lg:p-3 ${
+            className={`ease inline-flex items-center gap-3 rounded-full p-2.5 !text-white transition-all duration-300 hover:bg-primary-500  md:w-full md:rounded-lg ${
               pathname === route ? "bg-primary-500" : ""
             }`}
           >
             <Image
-              className="h-5 w-5 object-contain"
+              className="h-6 w-6 object-contain"
               src={imgURL}
               width={30}
               height={30}
@@ -48,14 +50,14 @@ export default function NavLink({ route, label, imgURL }: NavLinkProps) {
         </Sheet>
       ) : (
         <Link
-          href={route}
-          className={`ease inline-flex items-center gap-3 rounded-full p-2 !text-white transition-all  duration-300 hover:bg-primary-500 md:w-full md:rounded-lg lg:p-3 ${
+          href={route === "/profile" ? `/profile/${user.userId}` : route}
+          className={`ease inline-flex items-center gap-3 rounded-full p-2.5 !text-white transition-all duration-300 hover:bg-primary-500 md:w-full md:rounded-lg  ${
             pathname === route ? "bg-primary-500" : ""
           }`}
           key={label}
         >
           <Image
-            className="h-5 w-5 object-contain"
+            className="aspect-auto h-6 w-6 object-contain"
             src={imgURL}
             width={30}
             height={30}

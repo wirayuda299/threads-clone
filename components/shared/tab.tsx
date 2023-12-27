@@ -32,7 +32,7 @@ export default function Tab({ tabs }: { tabs: Readonly<TabTypes[]> }) {
           }`}
         >
           <Image
-            className="aspect-auto object-contain"
+            className="aspect-auto h-6 w-6 object-contain"
             src={tab.icon}
             width={30}
             height={30}

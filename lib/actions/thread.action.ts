@@ -5,13 +5,10 @@ import { notFound, redirect } from "next/navigation";
 import type { Types } from "@prisma/client";
 
 import prisma from "@/prisma";
-import {
-  getCurrentUser,
-  includeAuthorQuery,
-  threadLikesQuery,
-} from "@/lib/utils";
+import { includeAuthorQuery, threadLikesQuery } from "@/lib/utils";
+import { getCurrentUser } from "./user.action";
 
-export async function getThreads(page: number = 1, communityId?: string) {
+export async function getThreads(page: number = 1) {
   try {
     const totalPosts = await prisma?.thread?.count();
     const totalPages = Math.ceil(totalPosts / 10);
@@ -21,11 +18,11 @@ export async function getThreads(page: number = 1, communityId?: string) {
       take: 10,
       skip: (page - 1) * 10,
       where: {
+        communityId: { isEmpty: true },
         type: "thread",
-        ...(communityId && { communityId }),
       },
       ...includeAuthorQuery,
-      cacheStrategy: { ttl: 10, swr: 10 },
+      cacheStrategy: { ttl: 20, swr: 20 },
     });
 
     return { threads, totalPages };
@@ -74,7 +71,8 @@ export async function createThread(
   captions: string,
   type: Types,
   path: string,
-  parentId?: string
+  parentId?: string,
+  communityId?: string
 ) {
   try {
     const currentUser = await getCurrentUser();
@@ -83,10 +81,18 @@ export async function createThread(
         captions,
         type,
         ...(parentId && { parentId }),
+        ...(communityId && {
+          communityId: {
+            set: [communityId],
+          },
+        }),
         userId: currentUser.id,
       },
     });
     revalidatePath(path);
+    if (type === "thread" && communityId) {
+      return redirect(`/communities/${communityId}`);
+    }
     if (type === "thread") redirect("/");
   } catch (error) {
     throw error;
@@ -138,12 +144,15 @@ export async function getActivities() {
   }
 }
 
-export async function getThreadByCurrentUser(type: Types = "thread") {
+export async function getThreadByCurrentUser(
+  type: Types = "thread",
+  id: string
+) {
   try {
-    const currentUser = await getCurrentUser();
     const user = await prisma.user.findUnique({
-      where: { id: currentUser.id },
-      include: { threads: { where: { type } } },
+      where: { id },
+      include: { threads: { where: { type } }, communities: true },
+      cacheStrategy: { ttl: 20, swr: 20 },
     });
 
     if (!user) return notFound();

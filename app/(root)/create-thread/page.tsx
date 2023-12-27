@@ -5,5 +5,9 @@ export const metadata = {
 };
 
 export default function Create() {
-  return <CreateThreadForm />;
+  return (
+    <div className="h-full w-full p-3 ">
+      <CreateThreadForm />;
+    </div>
+  );
 }
