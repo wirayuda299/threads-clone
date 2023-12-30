@@ -1,8 +1,9 @@
 "use client";
 
-import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
-import CreateCommunitiesForm from "./forms/create-communities";
 import Image from "next/image";
+
+import CreateCommunitiesForm from "./forms/create-communities";
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 
 export default function CreateCommunityButton() {
   return (

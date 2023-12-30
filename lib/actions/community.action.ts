@@ -161,3 +161,25 @@ export async function addMember(id: string, user: User) {
     throw error;
   }
 }
+
+
+export async function getSuggestedCommunities() {
+  try {
+    return await prisma.community.findMany({
+      take: 3,
+      orderBy: {
+        createdAt: 'desc'
+      },
+      include: {
+        User: {
+          select: {
+            username: true,
+            id: true
+          }
+        }
+      }
+    })
+  } catch (e) {
+    throw e
+  }
+}

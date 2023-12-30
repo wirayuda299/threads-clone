@@ -30,7 +30,7 @@ export default function DeleteCommunityButton({ id }: { id: string }) {
         variant: "destructive",
       });
     }
-  };
+  }
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
