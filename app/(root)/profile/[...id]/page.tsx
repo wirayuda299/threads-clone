@@ -15,12 +15,15 @@ export async function generateMetadata({ params }: Props) {
   const user = await prisma.user.findUnique({
     where: {
       id: params.id[0],
-    },
+    }
   });
   if (!user) return notFound();
 
   return {
     title: user.username,
+    openGraph: {
+      images: [user.image]
+    }
   };
 }
 
@@ -60,11 +63,11 @@ export default async function Profile({ searchParams, params }: Props) {
       <section className="mt-5 flex flex-col gap-5">
         {searchParams.category
           ? user.threads
-              .filter((thread) => thread.type === searchParams.category)
-              .map((thread) => <Card {...thread} key={thread.id} User={user} />)
+            .filter((thread) => thread.type === searchParams.category)
+            .map((thread) => <Card {...thread} key={thread.id} User={user} />)
           : user.threads.map((thread) => (
-              <Card {...thread} key={thread.id} User={user} />
-            ))}
+            <Card {...thread} key={thread.id} User={user} />
+          ))}
       </section>
     </section>
   );

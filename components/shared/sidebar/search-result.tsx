@@ -5,7 +5,6 @@ import Parser from '../parser';
 import { Thread } from '@/types/threads';
 
 export default function SearchResult({ thread }: { thread: Thread }) {
-  console.log(thread)
 	return (
 		<Link
 			href={`thread/${thread.id}`}
