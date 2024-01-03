@@ -10,21 +10,22 @@ import { getCurrentUser } from "./user.action";
 
 export async function getThreads(page: number = 1) {
   try {
-    const totalPosts = await prisma?.thread?.count();
+    const [threads, totalPosts] = await prisma.$transaction([
+      prisma?.thread.findMany({
+        orderBy: { createdAt: "desc" },
+        take: 10,
+        skip: (page - 1) * 10,
+        where: {
+          communityId: { isEmpty: true },
+          type: "thread",
+        },
+        ...includeAuthorQuery,
+        cacheStrategy: { ttl: 20, swr: 20 },
+      }),
+      prisma.thread.count(),
+    ]);
+
     const totalPages = Math.ceil(totalPosts / 10);
-
-    const threads = await prisma?.thread.findMany({
-      orderBy: { createdAt: "desc" },
-      take: 10,
-      skip: (page - 1) * 10,
-      where: {
-        communityId: { isEmpty: true },
-        type: "thread",
-      },
-      ...includeAuthorQuery,
-      cacheStrategy: { ttl: 20, swr: 20 },
-    });
-
     return { threads, totalPages };
   } catch (error) {
     throw error;
@@ -102,18 +103,12 @@ export async function createThread(
 export async function searchThread(search: string) {
   try {
     const threads = await prisma.thread.findMany({
-      where: { captions: { search }, type: "thread" },
-      ...includeAuthorQuery,
-      orderBy: {
-        _relevance: {
-          search,
-          fields: "captions",
-          sort: "asc",
-        },
+      where: {
+        OR: [{ captions: { search } }, { captions: { contains: search } }],
       },
-      cacheStrategy: { ttl: 20, swr: 20 },
+      ...includeAuthorQuery,
     });
-    console.log(threads);
+
     return threads;
   } catch (error) {
     throw error;
