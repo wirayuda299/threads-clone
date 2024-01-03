@@ -157,3 +157,12 @@ export async function getThreadByCurrentUser(
     throw error;
   }
 }
+
+export async function deleteThread(id: string, path: string) {
+  try {
+    await prisma.thread.delete({ where: { id } });
+    revalidatePath(path);
+  } catch (error) {
+    throw error;
+  }
+}

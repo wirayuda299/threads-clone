@@ -14,6 +14,7 @@ export const metadata = {
 export default async function Home({ searchParams }: Params) {
   const page = searchParams.page ? +searchParams.page : 1;
   const { threads, totalPages } = await getThreads(page);
+  console.log(threads);
 
   return (
     <section className="no-scrollbar flex h-full min-h-screen w-full flex-col gap-5 overflow-y-auto px-5 pb-44 pt-5">
