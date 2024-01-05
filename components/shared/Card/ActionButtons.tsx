@@ -21,6 +21,7 @@ export default function ActionButton({
   const { userId } = useAuth();
   const isLikedByCurrentUser = likes.includes(userId!);
   if (isMember !== undefined && !isMember) return null;
+
   return (
     <div className="mt-3 inline-flex items-center gap-x-3 ">
       <button onClick={() => likeThread(id, window.location.pathname)}>

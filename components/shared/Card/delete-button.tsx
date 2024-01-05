@@ -1,10 +1,23 @@
 "use client";
 
+import Image from "next/image";
+import { useUser } from "@clerk/nextjs";
+
 import { toast } from "@/components/ui/use-toast";
 import { deleteThread } from "@/lib/actions/thread.action";
-import Image from "next/image";
 
-export default function DeleteButton({ id }: { id: string }) {
+export default function DeleteButton({
+  id,
+  authorId,
+}: {
+  id: string;
+  authorId: string;
+}) {
+  const { user, isLoaded, isSignedIn } = useUser();
+  if (!isLoaded || !isSignedIn) return null;
+
+  if (user.id !== authorId) return null;
+
   async function handleDelete() {
     try {
       await deleteThread(id, window.location.pathname).then(() => {

@@ -99,6 +99,7 @@ export async function createThread(
 
     if (!communityId && type === "thread") {
       redirect("/");
+      revalidatePath("/");
     }
 
     if (type === "comment") {

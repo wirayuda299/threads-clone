@@ -1,12 +1,11 @@
 import Image from "next/image";
-import { currentUser } from "@clerk/nextjs";
 import type { Thread } from "@prisma/client";
 
 import ActionButton from "./ActionButtons";
 import DeleteButton from "./delete-button";
 import Parser from "../parser";
 
-export default async function Card({
+export default function Card({
   captions,
   type,
   User,
@@ -22,8 +21,6 @@ export default async function Card({
   } | null;
   isMember?: boolean;
 }) {
-  const user = await currentUser();
-
   return (
     <article className="rounded-lg bg-main p-5">
       <div className="flex justify-start gap-4">
@@ -44,7 +41,7 @@ export default async function Card({
             <h2 className="h-min text-xl font-semibold text-white">
               {User?.username ?? ""}
             </h2>
-            {user && user.id === userId && <DeleteButton id={id} />}
+            <DeleteButton id={id} authorId={userId} />
           </div>
           <div className="prose flex w-full flex-col">
             <Parser content={captions} />
