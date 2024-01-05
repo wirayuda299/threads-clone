@@ -12,6 +12,9 @@ export const metadata: Metadata = {
     default: "Thread",
     absolute: "",
   },
+  alternates: {
+    canonical: process.env.SITE_URL!
+  },
   description: "Thread clone with Nextjs 14",
 };
 
