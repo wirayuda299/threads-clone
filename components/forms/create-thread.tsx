@@ -42,7 +42,7 @@ export default function ThreadForm({ communityId, setIsOpen }: ThreadProps) {
         "thread",
         window.location.pathname,
         undefined,
-        communityId
+        communityId && communityId
       );
     } catch (e) {
       if (e instanceof Error) {
@@ -53,7 +53,8 @@ export default function ThreadForm({ communityId, setIsOpen }: ThreadProps) {
       }
     } finally {
       setPending(false);
-      setIsOpen && setIsOpen(false);
+      setIsOpen ? setIsOpen(false) : console.log('Finish');
+      ;
     }
   };
 
