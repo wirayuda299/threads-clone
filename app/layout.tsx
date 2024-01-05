@@ -12,6 +12,12 @@ export const metadata: Metadata = {
     default: "Thread",
     absolute: "",
   },
+  openGraph: {
+    title: 'Thread Clone',
+    description: 'Thread Clone build with NextJS 14',
+    url: process.env.SITE_URL!,
+    siteName: 'Thread',
+  },
   alternates: {
     canonical: process.env.SITE_URL!
   },
