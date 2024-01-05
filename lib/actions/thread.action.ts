@@ -1,12 +1,12 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { notFound, redirect } from "next/navigation";
 import type { Types } from "@prisma/client";
 
 import prisma from "@/prisma";
 import { includeAuthorQuery, threadLikesQuery } from "@/lib/utils";
 import { getCurrentUser } from "./user.action";
+import { notFound } from "next/navigation";
 
 export async function getThreads(page: number = 1) {
   try {
@@ -93,21 +93,9 @@ export async function createThread(
       },
     });
     revalidatePath(path);
-    if (communityId && type === "thread") {
-      redirect(`/communities/${communityId}`);
-    }
-
-    if (!communityId && type === "thread") {
-      redirect("/");
-      revalidatePath("/");
-    }
-
-    if (type === "comment") {
-      revalidatePath(path);
-    }
   } catch (error) {
     if (error instanceof Error) {
-      console.log(error.message);
+      console.log("Error: " + error.message);
       throw error;
     }
   }

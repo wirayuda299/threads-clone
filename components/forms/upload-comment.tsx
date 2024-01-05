@@ -1,7 +1,7 @@
 "use client";
 
 import { useUser } from "@clerk/nextjs";
-import { useState } from "react";
+import { FormEvent, useState } from "react";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { createThread } from "@/lib/actions/thread.action";
@@ -13,15 +13,19 @@ export default function FormComment({ id }: { id: string }) {
   const { user } = useUser();
   const [isPending, setIsPending] = useState(false);
 
-  const onSubmit = async (data: FormData) => {
+  const onSubmit = async (e: FormEvent) => {
+    e.preventDefault();
     try {
       setIsPending(true);
       await createThread(
-        data.get("comment") as string,
+        // @ts-ignore
+        e.target.comment.value as string,
         "comment",
         window.location.pathname,
         id
       );
+      // @ts-ignore
+      e.target.comment.value = "";
     } catch (error) {
       if (error instanceof Error) {
         toast({
@@ -36,7 +40,7 @@ export default function FormComment({ id }: { id: string }) {
 
   return (
     <section className="mt-8 border-y border-main py-5">
-      <form className="flex items-center" action={onSubmit}>
+      <form className="flex items-center" onSubmit={onSubmit}>
         <Avatar>
           <AvatarImage
             width={300}

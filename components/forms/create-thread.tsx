@@ -17,6 +17,7 @@ import { createThread } from "@/lib/actions/thread.action";
 import { Button } from "../ui/button";
 import { toast } from "../ui/use-toast";
 import { Loader } from "../index";
+import { useRouter } from "next/navigation";
 
 const formSchema = z.object({
   caption: z.string().min(1, "Please add caption"),
@@ -33,6 +34,7 @@ export default function ThreadForm({ communityId, setIsOpen }: ThreadProps) {
     defaultValues: { caption: "" },
   });
   const [pending, setPending] = useState(false);
+  const router = useRouter();
 
   const onSubmit = async (data: z.infer<typeof formSchema>) => {
     try {
@@ -44,6 +46,12 @@ export default function ThreadForm({ communityId, setIsOpen }: ThreadProps) {
         undefined,
         communityId && communityId
       );
+      if (communityId) {
+        router.push(`/communities/${communityId}`);
+      }
+      if (!communityId) {
+        router.push("/");
+      }
     } catch (e) {
       if (e instanceof Error) {
         toast({
@@ -53,8 +61,7 @@ export default function ThreadForm({ communityId, setIsOpen }: ThreadProps) {
       }
     } finally {
       setPending(false);
-      setIsOpen ? setIsOpen(false) : console.log('Finish');
-      ;
+      setIsOpen ? setIsOpen(false) : console.log("Finish");
     }
   };
 
