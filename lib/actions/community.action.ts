@@ -5,7 +5,7 @@ import { revalidatePath } from "next/cache";
 
 import prisma from "@/prisma";
 import { getCurrentUser } from "./user.action";
-import { User } from "@prisma/client";
+import type { User } from "@prisma/client";
 
 type CreateCommunityProps = {
   description: string;

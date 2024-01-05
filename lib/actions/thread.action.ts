@@ -20,7 +20,6 @@ export async function getThreads(page: number = 1) {
           type: "thread",
         },
         ...includeAuthorQuery,
-        cacheStrategy: { ttl: 20, swr: 20 },
       }),
       prisma.thread.count(),
     ]);
@@ -147,7 +146,6 @@ export async function getThreadByCurrentUser(
     const user = await prisma.user.findUnique({
       where: { id },
       include: { threads: { where: { type } }, communities: true },
-      cacheStrategy: { ttl: 20, swr: 20 },
     });
 
     if (!user) return notFound();
