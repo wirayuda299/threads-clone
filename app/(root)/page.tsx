@@ -10,6 +10,7 @@ type Params = {
 export const metadata = {
   title: "Home",
 };
+export const dynamic = "force-dynamic";
 
 export default async function Home({ searchParams }: Params) {
   const page = searchParams.page ? +searchParams.page : 1;

@@ -51,7 +51,10 @@ export async function likeThread(postId: string, path: string) {
 export const getThreadById = async (id: string) => {
   try {
     const [thread, comments] = await prisma?.$transaction([
-      prisma.thread.findUnique({ where: { id }, ...includeAuthorQuery }),
+      prisma.thread.findUnique({
+        where: { id },
+        ...includeAuthorQuery,
+      }),
       prisma.thread.findMany({
         where: { type: "comment", parentId: id },
         orderBy: { createdAt: "desc" },
@@ -90,12 +93,22 @@ export async function createThread(
       },
     });
     revalidatePath(path);
-    if (type === "thread" && communityId) {
-      return redirect(`/communities/${communityId}`);
+    if (communityId && type === "thread") {
+      redirect(`/communities/${communityId}`);
     }
-    if (type === "thread") redirect("/");
+
+    if (!communityId && type === "thread") {
+      redirect("/");
+    }
+
+    if (type === "comment") {
+      revalidatePath(path);
+    }
   } catch (error) {
-    throw error;
+    if (error instanceof Error) {
+      console.log(error.message);
+      throw error;
+    }
   }
 }
 
