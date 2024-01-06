@@ -1,7 +1,8 @@
 import Image from "next/image";
 
-import { User } from "@prisma/client";
-import { ReactNode } from "react";
+import type { User } from "@prisma/client";
+import type { ReactNode } from "react";
+
 type Props = {
   user: User;
   children?: ReactNode;

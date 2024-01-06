@@ -37,7 +37,7 @@ export default function DeleteButton({
     <button onClick={handleDelete}>
       <Image
         className="aspect-auto h-3 w-3 object-contain"
-        src={"assets/trash.svg"}
+        src={"/assets/trash.svg"}
         width={15}
         height={15}
         alt="delete icon"

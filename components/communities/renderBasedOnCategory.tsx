@@ -2,8 +2,8 @@
 
 import { useUser } from "@clerk/nextjs";
 import Link from "next/link";
+import type { Thread, User } from "@prisma/client";
 
-import { Thread, User } from "@prisma/client";
 import { Card } from "../index";
 import UserInfo from "./user-info";
 import { Button } from "../ui/button";

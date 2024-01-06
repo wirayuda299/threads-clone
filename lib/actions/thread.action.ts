@@ -2,11 +2,11 @@
 
 import { revalidatePath } from "next/cache";
 import type { Types } from "@prisma/client";
+import { notFound } from "next/navigation";
 
 import prisma from "@/prisma";
-import { includeAuthorQuery, threadLikesQuery } from "@/lib/utils";
+import { includeAuthorQuery } from "@/lib/utils";
 import { getCurrentUser } from "./user.action";
-import { notFound } from "next/navigation";
 
 export async function getThreads(page: number = 1) {
   try {
@@ -38,9 +38,22 @@ export async function likeThread(postId: string, path: string) {
     const thread = await prisma.thread.findFirst({ where: { id: postId } });
     if (!thread) return;
 
-    const q = { where: { id: thread?.id } } as const;
-    const likesQuery = threadLikesQuery(thread!, user);
-    await prisma.thread.update({ ...q, ...likesQuery });
+    const idx = thread.likes.findIndex((like) => like === user.id);
+
+    if (idx === -1) {
+      thread.likes.push(user.id);
+    } else {
+      thread.likes.splice(idx, 1);
+    }
+
+    await prisma.thread.update({
+      where: { id: thread?.id },
+      data: {
+        likes: {
+          set: thread.likes,
+        },
+      },
+    });
 
     revalidatePath(path);
   } catch (error) {

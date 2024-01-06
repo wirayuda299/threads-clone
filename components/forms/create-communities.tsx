@@ -4,6 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import Image from "next/image";
+import { useState } from "react";
 
 import {
   Form,
@@ -19,7 +20,6 @@ import { Textarea } from "../ui/textarea";
 import { Button } from "../ui/button";
 import { createCommunity } from "@/lib/actions/community.action";
 import { toast } from "../ui/use-toast";
-import { useState } from "react";
 
 const createCommunitiesSchema = z.object({
   name: z.string().min(4, "Name must greater than 4 characters"),
