@@ -1,7 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
 
-import Parser from "../parser";
 import { Thread } from "@/types/threads";
 
 export default function SearchResult({ thread }: { thread: Thread }) {
@@ -19,12 +18,10 @@ export default function SearchResult({ thread }: { thread: Thread }) {
         alt={thread.User?.image ?? ""}
       />
       <div className="overflow-x-hidden">
-        <h4 className="text-2xl font-semibold text-white">
+        <h4 className="text-xl font-semibold text-white">
           {thread?.User?.username ?? ""}
         </h4>
-        <div className="prose overflow-hidden truncate">
-          <Parser content={thread.captions} />
-        </div>
+        <p className="line-clamp-1 text-sm text-white">{thread.captions}</p>
       </div>
     </Link>
   );

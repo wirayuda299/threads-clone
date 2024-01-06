@@ -3,7 +3,6 @@
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Editor } from "@tinymce/tinymce-react";
 import { Dispatch, SetStateAction, useState } from "react";
 import { useRouter } from "next/navigation";
 
@@ -17,6 +16,7 @@ import {
 import { createThread } from "@/lib/actions/thread.action";
 import { Button } from "../ui/button";
 import { toast } from "../ui/use-toast";
+import { Textarea } from "../ui/textarea";
 
 const formSchema = z.object({
   caption: z.string().min(1, "Please add caption"),
@@ -78,60 +78,12 @@ export default function ThreadForm({ communityId, setIsOpen }: ThreadProps) {
             render={({ field }) => (
               <FormItem>
                 <FormControl>
-                  <Editor
-                    apiKey={process.env.NEXT_PUBLIC_TINY_EDITOR_API_KEY}
-                    initialValue=""
-                    onEditorChange={(content) => field.onChange(content)}
-                    init={{
-                      advcode_inline: true,
-                      xss_sanitization: true,
-                      branding: false,
-                      height: 500,
-
-                      menubar: false,
-                      plugins: [
-                        "advlist",
-                        "autolink",
-                        "lists",
-                        "link",
-                        "image",
-                        "codesample",
-                        "charmap",
-                        "preview",
-                        "anchor",
-                        "searchreplace",
-                        "visualblocks",
-                        "code",
-                        "fullscreen",
-                        "insertdatetime",
-                        "media",
-                        "table",
-                        "code",
-                        "help",
-                      ],
-                      codesample_languages: [
-                        { text: "HTML/XML", value: "markup" },
-                        { text: "JavaScript", value: "javascript" },
-                        { text: "CSS", value: "css" },
-                        { text: "PHP", value: "php" },
-                        { text: "Ruby", value: "ruby" },
-                        { text: "Python", value: "python" },
-                        { text: "Java", value: "java" },
-                        { text: "C", value: "c" },
-                        { text: "C#", value: "csharp" },
-                        { text: "C++", value: "cpp" },
-                      ],
-
-                      toolbar:
-                        "Write preview CodeOfConduct |" +
-                        "bold italic underline strikethrough forecolor codesample link image alignleft aligncenter alignright alignjustify bullist numlist |",
-                      content_style: `
-                    body { 
-                      font-family:Helvetica,Arial,sans-serif; font-size:16px; 
-                      background-color:#121417;
-                      color:#fff !important;
-                     }`,
-                    }}
+                  <Textarea
+                    {...field}
+                    placeholder="Captions..."
+                    className="bg-main "
+                    cols={50}
+                    rows={20}
                   />
                 </FormControl>
                 <FormMessage className="dark:text-red-500" />

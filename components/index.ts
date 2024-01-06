@@ -1,11 +1,10 @@
 export { default as Sidebar } from "@/components/shared/sidebar/sidebar";
-export { default as Header } from "@/components/shared/Header/index";
+export { default as Header } from "@/components/shared/Header";
 export { default as SuggestedCommunities } from "@/components/shared/SuggestedCommunities";
 export { default as CreateThreadForm } from "@/components/forms/create-thread";
 export { default as Loader } from "@/components/shared/Loader";
 export { default as Card } from "@/components/shared/Card/index";
 export { default as CommentForm } from "@/components/forms/upload-comment";
-export { default as Parser } from "@/components/shared/parser";
 export { default as Tab } from "@/components/shared/tab";
 export { default as Pagination } from "@/components/shared/Pagination";
 export { default as CreateCommunityForm } from "@/components/forms/create-communities";

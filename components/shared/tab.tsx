@@ -17,7 +17,7 @@ export default function Tab({ tabs }: { tabs: Readonly<TabTypes[]> }) {
 
   const handleClick = (value: string) => {
     const path = formUrlQuery(params.toString(), "category", value);
-    router.push(path);
+    router.replace(path);
   };
   const category = params.get("category");
 

@@ -3,7 +3,6 @@ import type { Thread } from "@prisma/client";
 
 import ActionButton from "./ActionButtons";
 import DeleteButton from "./delete-button";
-import Parser from "../parser";
 
 export default function Card({
   captions,
@@ -43,9 +42,7 @@ export default function Card({
             </h2>
             <DeleteButton id={id} authorId={userId} />
           </div>
-          <div className="prose flex w-full flex-col">
-            <Parser content={captions} />
-          </div>
+          <p className="line-clamp-3 pt-2">{captions}</p>
           <div className="min-h-min">
             <ActionButton
               id={type === "thread" ? id : parentId ?? id}
